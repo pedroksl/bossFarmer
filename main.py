@@ -28,7 +28,7 @@ summonBosses = False  # Allow boss summoning
 run = True  # Variable used to start/stop running the code
 fightMode = 0  # Switches between fight modes -> 0 = boss fight, 1 = use skills and ult on whatever you are doing
 ptSkillSelected = 1  # Party skill selected to use
-heroSkillSelected = 2  # Hero skill selected to use
+heroSkillSelected = 1  # Hero skill selected to use
 timeout = 600  # Time to wait before reconnecting to the game after login from another device
 unstuck = 300  # Time to wait before leaving a battle because the code is stuck
 menuUnstuck = 30  # Time to wait in the menu before trying to unstuck
@@ -65,6 +65,7 @@ doneSummoning = "Images/doneSummoning.bmp"
 loginReward = "Images/loginReward.bmp"
 equipToSell = "Images/equipToSell.bmp"
 accessoryError = "Images/accessoryError.bmp"
+bossDeadError = "Images/bossDeadError.bmp"
 
 
 # Class used to listen to keyboard input and update the application
@@ -248,6 +249,10 @@ def startBossFight(uncontrolled=False):
         time.sleep(1)
         if not sellEquips():
             return False
+    elif searchForImage(bossDeadError):
+        print("On, no, boss is already dead!")
+        click_random([298, 518])
+        return False
     else:
         time1 = time.perf_counter()
         fightBoss()
