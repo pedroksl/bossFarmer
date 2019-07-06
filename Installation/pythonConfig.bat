@@ -1,5 +1,5 @@
 @echo off
-set /p proc=What file to use (1=Generic, 2=AMD) (Recommended->1):
+set /p proc=What file to use (1=Generic, 2=AMD) (Recommended=1):
 
 IF %proc% EQU 1 (
 pip install pywin32-224-cp37-cp37m-win32.whl
