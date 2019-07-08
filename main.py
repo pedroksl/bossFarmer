@@ -271,6 +271,7 @@ def startBossFight(increaseDelay=False, uncontrolled=False):
         time.sleep(randomTime)
     if not searchForImageLoop(battleStart, True, time1):
         return False
+    time.sleep(2)
     if (searchForImage(equipFull)):
         print("Oh, no, time to sell gear!")
         click_random([298, 518])
