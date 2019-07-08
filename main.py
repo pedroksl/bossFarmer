@@ -27,7 +27,7 @@ randomizedDamage = True  # Randomizes the timer to leave fight on controlled mod
 summonBosses = False  # Allow boss summoning
 run = True  # Variable used to start/stop running the code
 fightMode = 0  # Switches between fight modes -> 0 = boss fight, 1 = use skills and ult on whatever you are doing
-ptSkillSelected = 1  # Party skill selected to use
+ptSkillSelected = 3  # Party skill selected to use
 heroSkillSelected = 1  # Hero skill selected to use
 timeout = 600  # Time to wait before reconnecting to the game after login from another device
 unstuck = 300  # Time to wait before leaving a battle because the code is stuck
