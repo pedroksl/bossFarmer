@@ -65,7 +65,27 @@ doneSummoning = "Images/doneSummoning.bmp"
 loginReward = "Images/loginReward.bmp"
 equipToSell = "Images/equipToSell.bmp"
 accessoryError = "Images/accessoryError.bmp"
+accessoryLagError = "Images/accessoryLagError.bmp"
 bossDeadError = "Images/bossDeadError.bmp"
+pauseWindow = "Images/pauseWindow.bmp"
+
+chasmAgios = "Images/Chasm/chasmAgios.bmp"
+chasmBalzac = "Images/Chasm/chasmBalzac.bmp"
+chasmBelile = "Images/Chasm/chasmBelile.bmp"
+chasmBoar = "Images/Chasm/chasmBoar.bmp"
+chasmBriel = "Images/Chasm/chasmBriel.bmp"
+chasmCharon = "Images/Chasm/chasmCharon.bmp"
+chasmDullahan = "Images/Chasm/chasmDullahan.bmp"
+chasmFennel = "Images/Chasm/chasmFennel.bmp"
+chasmFermat = "Images/Chasm/chasmFermat.bmp"
+chasmFlaune = "Images/Chasm/chasmFlaune.bmp"
+chasmHanout = "Images/Chasm/chasmHanout.bmp"
+chasmMarjoram = "Images/Chasm/chasmMarjoram.bmp"
+chasmMolly = "Images/Chasm/chasmMolly.bmp"
+chasmNephilim = "Images/Chasm/chasmNephilim.bmp"
+chasmPoseidon = "Images/Chasm/chasmPoseidon.bmp"
+chasmRasel = "Images/Chasm/chasmRasel.bmp"
+chasmTacoel = "Images/Chasm/chasmTacoel.bmp"
 
 
 # Class used to listen to keyboard input and update the application
@@ -173,16 +193,14 @@ def exitBossFight():
 def fightWithSkillsAndUlt():
     if enableSkills:
         print("Skills are Enabled!")
+        im = screenshot()
         if searchForImage(autoSkill):
-            image = screenshot()
-            rgb = image.getpixel((1074 + hMargin, 35 + vMargin))
+            rgb = im.getpixel((1074 + hMargin, 35 + vMargin))
             if rgb[0] > 150:
-                click_random([1074, 37])
+                click_exact([1074, 35])
 
-        if searchForImage(partySkill):
-            im = screenshot()
             rgb = im.getpixel((663 + hMargin, 678 + vMargin))
-            if rgb[0] > 100:
+            if rgb[0] > 100 and rgb[2] < 20:
                 click_exact([663, 678])
                 time.sleep(0.4)
                 click_random([450 + 100 * ptSkillSelected, 520])
@@ -205,19 +223,24 @@ def fightWithSkillsAndUlt():
 # Method that controls the boss fight timer and check for possible crashes
 def fightBoss():
     if searchForImage(accessoryError):
-        return
+        return False
     bossTimerReal = bossTimer
     time1 = time.perf_counter()
     if randomizedDamage:
         bossTimerReal = bossTimer + r(-10, 10)
+    print("Waiting for battle to load")
+    if not searchForImageLoop(pauseBattle):
+        return False
     while not searchForImage(battleExit, True):
         print("Fight Boss!")
         if searchForImage(gameStart):
-            return
+            return False
         if searchForImage(connectionNotice):
-            return
+            return False
         if searchForImage(bossCalculating):
-            return
+            return False
+        if run and searchForImage(pauseWindow):
+            click_random([298, 518])
 
         if controlledDamage and time.perf_counter() - time1 > bossTimerReal:
             print(controlledDamage)
@@ -227,11 +250,13 @@ def fightBoss():
         fightWithSkillsAndUlt()
 
         if time.perf_counter() - time1 > unstuck:
-            break
+            print("Oops, took too long to finish the boss, might be stuck!")
+            return False
+    return True
 
 
 # Method called to begin a fight, navigating through menus
-def startBossFight(uncontrolled=False):
+def startBossFight(increaseDelay=False, uncontrolled=False):
     if searchForImage(accessoryError):
         return False
     time1 = time.perf_counter()
@@ -241,6 +266,9 @@ def startBossFight(uncontrolled=False):
         controlledDamage = False
     if not searchForImageLoop(battleReady, True, time1):
         return False
+    if increaseDelay:
+        randomTime = 10 + r(5, 10)
+        time.sleep(randomTime)
     if not searchForImageLoop(battleStart, True, time1):
         return False
     if (searchForImage(equipFull)):
@@ -255,8 +283,10 @@ def startBossFight(uncontrolled=False):
         return False
     else:
         time1 = time.perf_counter()
-        fightBoss()
+        result = fightBoss()
         controlledDamage = saveControlledDamage
+        if not result:
+            return False
     return True
 
 
@@ -276,18 +306,19 @@ def summonSomething():
         if not searchForImageLoop(summonConfirm, True, time1):
             return
         time.sleep(8)
-        click_random([1200, 700])
+        click_random([298, 518])
 
 
 # Method that monitors the boss window, starting fights, collecting reward, etc
 def bossKillingLoop():
     time1 = time.perf_counter()
+    bossNotFound = False
     while run:
         print("Boss Killing Loop!")
         if searchForImage(connectionNotice) or searchForImage(gameStart):
             print("Oops, connection error or crash!")
             return
-        if searchForImage(accessoryError):
+        if searchForImage(accessoryError) or searchForImage(accessoryLagError):
             click_random([298, 518])
         if searchForImage(accesoryReady):
             image = screenshot()
@@ -311,19 +342,24 @@ def bossKillingLoop():
                 if rgb[0] > 200 and rgb[2] < 100:
                     print("Killing my own boss!")
                     click_random([pos[0] + 650, pos[1] + 20])
-                    if not startBossFight(True):
+                    if not startBossFight(False, True):
                         return
                     time.sleep(1)
+                    bossNotFound = False
                     continue
         if searchForImage(battleParticipate, True):
             print("Found a new boss!")
-            if not startBossFight():
+            if not startBossFight(bossNotFound):
                 return
+            bossNotFound = False
         elif summonBosses and not searchForImage(ownBoss) and searchForImage(doneSummoning):
+            bossNotFound = False
             summonSomething()
         elif searchForImage(bossCalculating):
             return
-        time.sleep(1)
+        else:
+            bossNotFound = True
+        time.sleep(3)
 
 
 # Method used to restart the game in case of a crash
@@ -386,6 +422,8 @@ def main():
                         findBossScreen()
                     elif fightMode == 1:
                         fightWithSkillsAndUlt()
+                else:
+                    time.sleep(2)
         except KeyboardInterrupt:
             exit()
 
