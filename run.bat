@@ -1,2 +1,2 @@
-cd C:\Users\Home\Desktop\bossFarmer
+cd C:\Users\Pedro\Desktop\bossFarmer
 python main.py
