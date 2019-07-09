@@ -230,7 +230,7 @@ def fightBoss():
     if randomizedDamage:
         bossTimerReal = bossTimer + r(-10, 10)
     print("Waiting for battle to load")
-    if not searchForImageLoop(pauseBattle):
+    if not searchForImageLoop(pauseBattle, timer=time1):
         return False
     while not searchForImage(battleExit, True):
         print("Fight Boss!")
@@ -272,7 +272,7 @@ def startBossFight(increaseDelay=False, uncontrolled=False):
         time.sleep(randomTime)
     if not searchForImageLoop(battleStart, True, time1):
         return False
-    time.sleep(2)
+    time.sleep(1)
     if (searchForImage(equipFull)):
         print("Oh, no, time to sell gear!")
         click_random([298, 518])
@@ -356,7 +356,7 @@ def bossKillingLoop():
                 return
             bossNotFound = False
             time1 = time.perf_counter()
-        elif summonBosses and not searchForImage(ownBoss) and searchForImage(doneSummoning):
+        elif summonBosses and not searchForImage(ownBoss) and searchForImage(doneSummoning, precision=0.95):
             bossNotFound = False
             summonSomething()
         elif searchForImage(bossCalculating):
@@ -371,12 +371,14 @@ def bossKillingLoop():
 # Method used to restart the game in case of a crash
 def restartTheGame():
     print("Restart the Game!")
+    time1 = time.perf_counter()
     if searchForImage(gameStart):
         click_random([1050, 225])
-        if not searchForImageLoop(touchStart, True):
+        if not searchForImageLoop(touchStart, True, time1):
             print("Couldn't find the touch to start button. :(")
             return False
-        if not searchForImageLoop(closeEvent, True):
+        time1 = time.perf_counter()
+        if not searchForImageLoop(closeEvent, True, time1):
             print("Couldn't close the event notice. :(")
             return False
         return True
