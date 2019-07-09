@@ -364,7 +364,7 @@ def bossKillingLoop():
         else:
             bossNotFound = True
         time.sleep(3)
-        if time1 > refreshBossScreen:
+        if time.perf_counter() - time1 > refreshBossScreen:
             return
 
 
