@@ -393,14 +393,14 @@ def findBossScreen():
         time.sleep(timeout)
     if searchForImage(accessoryError):
         click_random([298, 518])
-    if searchForImage(gameStart):
-        print("Did we crash?")
-        if not restartTheGame():
-            return
     if searchForImage(touchStart, True):
         print("Failed to click on Touch to Start during restart.")
     if searchForImage(closeEvent, True):
         print("Failed to click on Close Event during restart.")
+    if searchForImage(gameStart):
+        print("Did we crash?")
+        if not restartTheGame():
+            return
     while searchForImage(xIcon, True):
         time.sleep(1)
     while searchForImage(homeIcon, True):
