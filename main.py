@@ -45,6 +45,7 @@ skillReady = "Images/6_skillReady.bmp"
 battleExit = "Images/7_battleExit.bmp"
 rewardCheck = "Images/8_rewardCheck.bmp"
 rewardConfirm = "Images/9_rewardConfirm.bmp"
+rewardAcquired = "Images/rewardAcquired.bmp"
 battleIcon = "Images/battleIcon.bmp"
 closeEvent = "Images/closeEvent.bmp"
 connectionNotice = "Images/connectionNotice.bmp"
@@ -331,8 +332,8 @@ def bossKillingLoop():
                 click_random([298, 518])
         if searchForImage(rewardCheck, True):
             print("Getting reward!")
-            time.sleep(2)
-            click_random([298, 518])
+            if not searchForImageLoop(rewardAcquired, True, time1):
+                return
             if not searchForImageLoop(rewardConfirm, True, time1):
                 return
         if searchForImage(ownBoss):
