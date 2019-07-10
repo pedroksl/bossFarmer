@@ -272,24 +272,23 @@ def startBossFight(increaseDelay=False, uncontrolled=False):
         time.sleep(randomTime)
     if not searchForImageLoop(battleStart, True, time1):
         return False
-    time.sleep(1)
-    if (searchForImage(equipFull)):
-        print("Oh, no, time to sell gear!")
-        click_random([298, 518])
-        time.sleep(1)
-        if not sellEquips():
+    while not searchForImage(pauseBattle):
+        if (searchForImage(equipFull)):
+            print("Oh, no, time to sell gear!")
+            click_random([298, 518])
+            time.sleep(1)
+            if not sellEquips():
+                return False
+            return True
+        elif searchForImage(bossDeadError):
+            print("On, no, boss is already dead!")
+            click_random([298, 518])
             return False
-    elif searchForImage(bossDeadError):
-        print("On, no, boss is already dead!")
-        click_random([298, 518])
-        return False
-    else:
-        time1 = time.perf_counter()
-        result = fightBoss()
-        controlledDamage = saveControlledDamage
-        if not result:
-            return False
-    return True
+
+    time1 = time.perf_counter()
+    result = fightBoss()
+    controlledDamage = saveControlledDamage
+    return result
 
 
 # Method used to summon new bosses if there aren't any available
