@@ -230,9 +230,6 @@ def fightBoss():
     time1 = time.perf_counter()
     if randomizedDamage:
         bossTimerReal = bossTimer + r(-10, 10)
-    print("Waiting for battle to load")
-    if not searchForImageLoop(pauseBattle, timer=time1):
-        return False
     while not searchForImage(battleExit, True):
         print("Fight Boss!")
         if searchForImage(gameStart):
@@ -274,6 +271,7 @@ def startBossFight(increaseDelay=False, uncontrolled=False):
     if not searchForImageLoop(battleStart, True, time1):
         return False
     time1 = time.perf_counter()
+    print("Waiting for battle to load")
     while not searchForImage(pauseBattle):
         if searchForImage(gameStart) or time.perf_counter() - time1 > refreshBossScreen:
             return False
