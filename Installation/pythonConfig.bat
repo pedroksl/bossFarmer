@@ -8,4 +8,4 @@ pip install pywin32-224-cp37-cp37m-win_amd64.whl
 )
 python pywin32_postinstall.py -install
 
-pip install numpy pynput pyautogui opencv-python pyqt5
+pip install numpy pynput pyautogui opencv-python pyqt5 pyside2
