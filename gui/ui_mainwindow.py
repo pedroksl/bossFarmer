@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'mainwindow.ui',
 # licensing of 'mainwindow.ui' applies.
 #
-# Created: Mon Jul 15 22:50:08 2019
+# Created: Mon Jul 15 23:07:13 2019
 #      by: pyside2-uic  running on PySide2 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -19,10 +19,9 @@ class Ui_MainWindow(object):
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout.setObjectName("verticalLayout")
         self.logoLabel = QtWidgets.QLabel(self.centralwidget)
-        self.logoLabel.setMinimumSize(QtCore.QSize(0, 100))
+        self.logoLabel.setMinimumSize(QtCore.QSize(0, 131))
+        self.logoLabel.setMaximumSize(QtCore.QSize(16777215, 131))
         self.logoLabel.setText("")
-        self.logoLabel.setPixmap(QtGui.QPixmap("../Images/autoChaserLogo.bmp"))
-        self.logoLabel.setScaledContents(True)
         self.logoLabel.setObjectName("logoLabel")
         self.verticalLayout.addWidget(self.logoLabel)
         self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
