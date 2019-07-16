@@ -1,0 +1,19 @@
+{
+    "files" :
+    [
+        "main.pyproject",
+        "main.py",
+        "gui/__init__.py",
+        "gui/mainwindow.py",
+        "gui/ui_mainwindow.py",
+        "gui/mainwindow.ui",
+        "controllers/__init__.py",
+        "controllers/ConfigurationController.py",
+        "controllers/ConfigurationObj.py",
+        "controllers/GameController.py",
+        "core/__init__.py",
+        "core/ImageImports.py",
+        "core/ImageSearcher.py",
+        "core/Run.py"
+    ]
+}
