@@ -6,6 +6,7 @@ class ImageImports():
         self.dailyButton = "Images/dailyButton.bmp"
         self.weeklyButton = "Images/weeklyButton.bmp"
         self.challengeButton = "Images/challengeButton.bmp"
+        self.questClear = "Images/questClear.bmp"
 
         self.ttowerButton = "Images/ttowerButton.bmp"
 

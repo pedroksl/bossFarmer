@@ -180,7 +180,7 @@ class GameController():
             if self.imgSearcher.searchForImage(self.imgImp.connectionNotice) or self.imgSearcher.searchForImage(self.imgImp.gameStart):
                 print("Oops, connection error or crash!")
                 return
-            if self.imgSearcher.searchForImage(self.imgImp.noticeMessage):
+            if self.imgSearcher.searchForImage(self.imgImp.noticeMessage) or self.imgSearcher.searchForImage(self.imgImp.questClear):
                 self.imgSearcher.click_random([298, 518])
             if self.imgSearcher.searchForImage(self.imgImp.accessoryError) or self.imgSearcher.searchForImage(self.imgImp.accessoryLagError):
                 self.imgSearcher.click_random([298, 518])
@@ -261,7 +261,7 @@ class GameController():
             if self.imgSearcher.searchForImage(self.imgImp.connectionNotice, True):
                 print("Someone logged in, let's wait for some time out.")
                 time.sleep(self.cc.configs.timeout)
-            if self.imgSearcher.searchForImage(self.imgImp.noticeMessage):
+            if self.imgSearcher.searchForImage(self.imgImp.noticeMessage) or self.imgSearcher.searchForImage(self.imgImp.questClear):
                 self.imgSearcher.click_random([298, 518])
             if self.imgSearcher.searchForImage(self.imgImp.accessoryError):
                 self.imgSearcher.click_random([298, 518])
@@ -298,7 +298,7 @@ class GameController():
                 return False
             if self.imgSearcher.searchForImage(self.imgImp.connectionNotice):
                 return False
-            if self.imgSearcher.searchForImage(self.imgImp.noticeMessage):
+            if self.imgSearcher.searchForImage(self.imgImp.noticeMessage) or self.imgSearcher.searchForImage(self.imgImp.questClear):
                 self.imgSearcher.click_random([298, 518])
             if self.cc.configs.run and self.imgSearcher.searchForImage(self.imgImp.pauseWindow):
                 self.imgSearcher.click_random([298, 518])
@@ -319,7 +319,7 @@ class GameController():
             if self.imgSearcher.searchForImage(self.imgImp.connectionNotice) or self.imgSearcher.searchForImage(self.imgImp.gameStart):
                 print("Oops, connection error or crash!")
                 return
-            if self.imgSearcher.searchForImage(self.imgImp.noticeMessage):
+            if self.imgSearcher.searchForImage(self.imgImp.noticeMessage) or self.imgSearcher.searchForImage(self.imgImp.questClear):
                 self.imgSearcher.click_random([298, 518])
             if self.imgSearcher.searchForImage(self.imgImp.battleReady, True):
                 if not self.imgSearcher.searchForImageLoop(self.imgImp.battleStart, True):
@@ -339,7 +339,7 @@ class GameController():
         if self.imgSearcher.searchForImage(self.imgImp.connectionNotice, True):
             print("Someone logged in, let's wait for some time out.")
             time.sleep(self.cc.configs.timeout)
-        if self.imgSearcher.searchForImage(self.imgImp.noticeMessage):
+        if self.imgSearcher.searchForImage(self.imgImp.noticeMessage) or self.imgSearcher.searchForImage(self.imgImp.questClear):
             self.imgSearcher.click_random([298, 518])
         if self.imgSearcher.searchForImage(self.imgImp.accessoryError):
             self.imgSearcher.click_random([298, 518])
