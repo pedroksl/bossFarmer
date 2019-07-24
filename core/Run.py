@@ -12,15 +12,13 @@ class Run(threading.Thread):
 
     def run(self):
         self.gc.setWindowMargins()
-        while True:
-            try:
-                while True:
-                    if self.cc.configs.run:
-                        if self.cc.configs.fightMode == 0:
-                            self.gc.findBossScreen()
-                        elif self.cc.configs.fightMode == 1:
-                            self.gc.fightWithSkillsAndUlt()
-                    else:
-                        time.sleep(2)
-            except KeyboardInterrupt:
-                exit()
+        while self.cc.configs.run:
+            if self.cc.configs.fightMode == 0:
+                self.gc.findBossScreen()
+                time.sleep(2)
+            elif self.cc.configs.fightMode == 1:
+                self.gc.fightWithSkillsAndUlt()
+                time.sleep(1)
+            elif self.cc.configs.fightMode == 2:
+                self.gc.findTrialTowerScreen()
+                time.sleep(2)

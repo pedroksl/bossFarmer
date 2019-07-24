@@ -1,15 +1,26 @@
 class ImageImports():
     def __init__(self):
         self.logo = "Images/autoChaserLogo.bmp"
-        self.accesoryReady = "Images/1_accessoryReady.bmp"
-        self.battleParticipate = "Images/2_battleParticipate.bmp"
-        self.battleReady = "Images/3_battleReady.bmp"
-        self.battleStart = "Images/4_battleStart.bmp"
-        self.partySkill = "Images/5_partySkill.bmp"
-        self.skillReady = "Images/6_skillReady.bmp"
-        self.battleExit = "Images/7_battleExit.bmp"
-        self.rewardCheck = "Images/8_rewardCheck.bmp"
-        self.rewardConfirm = "Images/9_rewardConfirm.bmp"
+        self.noxClose = "Images/noxClose.bmp"
+
+        self.dailyButton = "Images/dailyButton.bmp"
+        self.weeklyButton = "Images/weeklyButton.bmp"
+        self.challengeButton = "Images/challengeButton.bmp"
+
+        self.ttowerButton = "Images/ttowerButton.bmp"
+
+        self.dbossButton = "Images/dbossButton.bmp"
+        self.dbossScreen = "Images/dbossScreen.bmp"
+        self.noxRestart = "Images/noxRestart.bmp"
+        self.accesoryReady = "Images/accessoryReady.bmp"
+        self.battleParticipate = "Images/battleParticipate.bmp"
+        self.battleReady = "Images/battleReady.bmp"
+        self.battleStart = "Images/battleStart.bmp"
+        self.partySkill = "Images/partySkill.bmp"
+        self.skillReady = "Images/skillReady.bmp"
+        self.battleExit = "Images/battleExit.bmp"
+        self.rewardCheck = "Images/rewardCheck.bmp"
+        self.rewardConfirm = "Images/rewardConfirm.bmp"
         self.rewardAcquired = "Images/rewardAcquired.bmp"
         self.battleIcon = "Images/battleIcon.bmp"
         self.closeEvent = "Images/closeEvent.bmp"
@@ -37,6 +48,7 @@ class ImageImports():
         self.pauseWindow = "Images/pauseWindow.bmp"
         self.noticeMessage = "Images/noticeMessage.bmp"
 
+        self.dchasmButton = "Images/Chasm/dchasmButton.bmp"
         self.chasmAgios = "Images/Chasm/chasmAgios.bmp"
         self.chasmBalzac = "Images/Chasm/chasmBalzac.bmp"
         self.chasmBelile = "Images/Chasm/chasmBelile.bmp"

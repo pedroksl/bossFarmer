@@ -6,6 +6,8 @@ from controllers import GameController
 from core import ImageImports
 from core import Run
 
+threads = []
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
@@ -14,14 +16,12 @@ class MainWindow(QMainWindow):
         self.cc = ConfigurationController(self)
         self.gc = GameController(self.cc)
         self.createConnections()
-        self.runThread = Run(ConCon=self.cc, GameCon=self.gc)
-        self.runThread.setDaemon(True)
         header = self.ui.tableWidget.horizontalHeader()
         header.setSectionResizeMode(QHeaderView.Stretch)
         header = self.ui.tableWidget.verticalHeader();
         header.setSectionResizeMode(QHeaderView.Stretch);
         self.imgImp = ImageImports()
-        self.ui.logoLabel.setPixmap(QtGui.QPixmap(self.imgImp.logo).scaledToHeight(131))
+        self.ui.logoLabel.setPixmap(QtGui.QPixmap(self.imgImp.logo).scaledToHeight(200))
         self.updateTable()
 
 
@@ -44,8 +44,11 @@ class MainWindow(QMainWindow):
 
 
     def toggleRun(self):
-        if not self.runThread.isAlive():
-            self.runThread.start()
+        if all(not thread.isAlive() for thread in threads):
+            t = Run(ConCon=self.cc, GameCon=self.gc)
+            t.setDaemon(True)
+            threads.append(t)
+            t.start()
         self.cc.toggleRun()
         self.updateTable()
 

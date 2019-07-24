@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'mainwindow.ui',
 # licensing of 'mainwindow.ui' applies.
 #
-# Created: Mon Jul 15 23:20:22 2019
+# Created: Mon Jul 22 21:49:32 2019
 #      by: pyside2-uic  running on PySide2 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -13,14 +13,16 @@ from PySide2 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(661, 538)
+        MainWindow.resize(661, 607)
+        MainWindow.setMinimumSize(QtCore.QSize(661, 607))
+        MainWindow.setMaximumSize(QtCore.QSize(661, 607))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout.setObjectName("verticalLayout")
         self.logoLabel = QtWidgets.QLabel(self.centralwidget)
-        self.logoLabel.setMinimumSize(QtCore.QSize(0, 131))
-        self.logoLabel.setMaximumSize(QtCore.QSize(16777215, 131))
+        self.logoLabel.setMinimumSize(QtCore.QSize(0, 200))
+        self.logoLabel.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.logoLabel.setText("")
         self.logoLabel.setObjectName("logoLabel")
         self.verticalLayout.addWidget(self.logoLabel)
@@ -82,6 +84,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.tableWidget = QtWidgets.QTableWidget(self.frame)
         self.tableWidget.setMinimumSize(QtCore.QSize(0, 100))
+        self.tableWidget.setMaximumSize(QtCore.QSize(16777215, 150))
         self.tableWidget.setStyleSheet("selection-background-color: blue;\n"
 "background-color: rgb(39, 42, 49);\n"
 "font: 1em;\n"
@@ -127,10 +130,10 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QtWidgets.QApplication.translate("MainWindow", "Boss Farmer", None, -1))
         self.groupBox.setTitle(QtWidgets.QApplication.translate("MainWindow", "Fight Mode", None, -1))
-        self.fightModeAButton.setText(QtWidgets.QApplication.translate("MainWindow", "Gourlami", None, -1))
-        self.fightModeBButton.setText(QtWidgets.QApplication.translate("MainWindow", "Me engravida", None, -1))
-        self.fightModeCButton.setText(QtWidgets.QApplication.translate("MainWindow", "Doutor", None, -1))
-        self.fightModeDButton.setText(QtWidgets.QApplication.translate("MainWindow", "Cuida bem do teu filho", None, -1))
+        self.fightModeAButton.setText(QtWidgets.QApplication.translate("MainWindow", "Boss Farming", None, -1))
+        self.fightModeBButton.setText(QtWidgets.QApplication.translate("MainWindow", "Auto Skill/Ultimate", None, -1))
+        self.fightModeCButton.setText(QtWidgets.QApplication.translate("MainWindow", "Trial Tower", None, -1))
+        self.fightModeDButton.setText(QtWidgets.QApplication.translate("MainWindow", "Chasm", None, -1))
         self.fightModeEButton.setText(QtWidgets.QApplication.translate("MainWindow", "Samuel", None, -1))
         self.fightModeFButton.setText(QtWidgets.QApplication.translate("MainWindow", "Faz as bíblia", None, -1))
         self.groupBox_2.setTitle(QtWidgets.QApplication.translate("MainWindow", "Bot Controls", None, -1))

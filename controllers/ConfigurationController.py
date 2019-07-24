@@ -18,21 +18,27 @@ class ConfigurationController():
 
     def setFightModeA(self):
         self.configs.fightMode = 0
+        print("Boss farming mode selected.")
 
     def setFightModeB(self):
         self.configs.fightMode = 1
+        print("Auto Skill/Ultimate only mode selected.")
 
     def setFightModeC(self):
-        self.configs.fightMode = 0
+        self.configs.fightMode = 2
+        print("Trial tower mode selected.")
 
     def setFightModeD(self):
-        self.configs.fightMode = 0
+        self.configs.fightMode = 3
+        print("Chasm farming mode selected.")
 
     def setFightModeE(self):
-        self.configs.fightMode = 0
+        self.configs.fightMode = 4
+        print("Samuel viadinho")
 
     def setFightModeF(self):
-        self.configs.fightMode = 0
+        self.configs.fightMode = 5
+        print("Samuel trabaiadô")
 
     def toggleControlledDamage(self):
         self.configs.controlledDamage = not self.configs.controlledDamage

@@ -40,8 +40,10 @@ class ImageSearcher:
             yPos += self.vMargin
         return image.getpixel((xPos, yPos))
 
-    def screenshot(self, rleft=-1, rtop=-1, rright=-1, rbot=-1):
-        hwnd = win32gui.FindWindow(None, self.windowName)
+    def screenshot(self, rleft=-1, rtop=-1, rright=-1, rbot=-1, windowName=""):
+        if windowName is "":
+            windowName = self.windowName
+        hwnd = win32gui.FindWindow(None, windowName)
 
         left, top, right, bot = win32gui.GetWindowRect(hwnd)
         w = right - left
@@ -127,8 +129,10 @@ class ImageSearcher:
         return pos
 
 
-    def click_random(self, pos, timestamp=0.5, action="left", offset=5):
-        hWnd = win32gui.FindWindow(None, self.windowName)
+    def click_random(self, pos, timestamp=0.5, action="left", offset=5, windowName=""):
+        if windowName is "":
+            windowName = self.windowName
+        hWnd = win32gui.FindWindow(None, windowName)
         if offset > 0:
             lParam = win32api.MAKELONG(pos[0] + self.hMargin + r(-offset, offset),
                                        pos[1] + self.vMargin + r(-offset, offset))

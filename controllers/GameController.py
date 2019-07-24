@@ -167,7 +167,7 @@ class GameController():
             self.imgSearcher.click_random([pos[0] + 160, pos[1] + 30])
             if not self.imgSearcher.searchForImageLoop(self.imgImp.summonConfirm, True, time1):
                 return
-            time.sleep(8)
+            time.sleep(1)
             self.imgSearcher.click_random([298, 518])
 
 
@@ -227,6 +227,7 @@ class GameController():
             time.sleep(3)
             if time.perf_counter() - time1 > self.cc.configs.refreshBossScreen:
                 return
+        print("Run is off, stopping farm.")
 
 
     # Method used to restart the game in case of a crash
@@ -248,7 +249,93 @@ class GameController():
 
     # Method used to find the boss screen no matter what window of the game you are
     def findBossScreen(self):
-        print("Find Boss Screen!")
+        if self.imgSearcher.searchForImage(self.imgImp.dbossScreen):
+            self.bossKillingLoop()
+        else:
+            print("Find Boss Screen!")
+#        if self.imgSearcher.searchForImage(self.imgImp.noxClose, True):
+#            time.sleep(1)
+#            im = self.imgSearcher.screenshot(windowName="Reminder")
+#            im.save("Test.png")
+#            self.imgSearcher.click_random([824, 400], windowName="Reminder")
+            if self.imgSearcher.searchForImage(self.imgImp.connectionNotice, True):
+                print("Someone logged in, let's wait for some time out.")
+                time.sleep(self.cc.configs.timeout)
+            if self.imgSearcher.searchForImage(self.imgImp.noticeMessage):
+                self.imgSearcher.click_random([298, 518])
+            if self.imgSearcher.searchForImage(self.imgImp.accessoryError):
+                self.imgSearcher.click_random([298, 518])
+            if self.imgSearcher.searchForImage(self.imgImp.touchStart, True):
+                print("Failed to click on Touch to Start during restart.")
+            if self.imgSearcher.searchForImage(self.imgImp.closeEvent, True):
+                print("Failed to click on Close Event during restart.")
+            if self.imgSearcher.searchForImage(self.imgImp.gameStart):
+                print("Did we crash?")
+                if not self.restartTheGame():
+                    return
+            while self.imgSearcher.searchForImage(self.imgImp.xIcon, True):
+                time.sleep(1)
+            while self.imgSearcher.searchForImage(self.imgImp.homeIcon, True):
+                time.sleep(1)
+
+            if self.imgSearcher.searchForImage(self.imgImp.loginReward):
+                self.imgSearcher.click_random([298, 518])
+
+            if self.imgSearcher.searchForImage(self.imgImp.battleIcon, True):
+                print("Time to search for some fights!")
+                while not self.imgSearcher.searchForImage(self.imgImp.dbossButton, True):
+                    self.imgSearcher.searchForImage(self.imgImp.dailyButton, True)
+                self.bossKillingLoop()
+            else:
+                self.imgSearcher.click_random([198, 518])
+
+
+    def fightTowerLevel(self):
+        time1 = time.perf_counter()
+        while not self.imgSearcher.searchForImage(self.imgImp.battleExit, True):
+            print("Fight!")
+            if self.imgSearcher.searchForImage(self.imgImp.gameStart):
+                return False
+            if self.imgSearcher.searchForImage(self.imgImp.connectionNotice):
+                return False
+            if self.imgSearcher.searchForImage(self.imgImp.noticeMessage):
+                self.imgSearcher.click_random([298, 518])
+            if self.cc.configs.run and self.imgSearcher.searchForImage(self.imgImp.pauseWindow):
+                self.imgSearcher.click_random([298, 518])
+
+            self.fightWithSkillsAndUlt()
+
+            if time.perf_counter() - time1 > self.cc.configs.towerStuck:
+                self.imgSearcher.click_random([298, 518])
+                print("Oops, took too long to finish the boss, might be stuck!")
+                return False
+        return True
+
+
+    def trialFarmingLoop(self):
+        time1 = time.perf_counter()
+        while self.cc.configs.run:
+            print("Trial Tower Farming Loop!")
+            if self.imgSearcher.searchForImage(self.imgImp.connectionNotice) or self.imgSearcher.searchForImage(self.imgImp.gameStart):
+                print("Oops, connection error or crash!")
+                return
+            if self.imgSearcher.searchForImage(self.imgImp.noticeMessage):
+                self.imgSearcher.click_random([298, 518])
+            if self.imgSearcher.searchForImage(self.imgImp.battleReady, True):
+                if not self.imgSearcher.searchForImageLoop(self.imgImp.battleStart, True):
+                    return False
+                print("Waiting for battle to load")
+                while not self.imgSearcher.searchForImage(self.imgImp.pauseBattle):
+                    time.sleep(1)
+                if not self.fightTowerLevel():
+                    return False
+            time.sleep(1)
+        print("Run is off, stopping farm.")
+        return True
+
+
+    def findTrialTowerScreen(self):
+        print("Find Trial Tower Screen!")
         if self.imgSearcher.searchForImage(self.imgImp.connectionNotice, True):
             print("Someone logged in, let's wait for some time out.")
             time.sleep(self.cc.configs.timeout)
@@ -263,7 +350,7 @@ class GameController():
         if self.imgSearcher.searchForImage(self.imgImp.gameStart):
             print("Did we crash?")
             if not self.restartTheGame():
-                return
+                return False
         while self.imgSearcher.searchForImage(self.imgImp.xIcon, True):
             time.sleep(1)
         while self.imgSearcher.searchForImage(self.imgImp.homeIcon, True):
@@ -273,8 +360,9 @@ class GameController():
             self.imgSearcher.click_random([298, 518])
 
         if self.imgSearcher.searchForImage(self.imgImp.battleIcon, True):
-            print("Time to search for some fights!")
-            time.sleep(3)
-            self.imgSearcher.click_random([198, 518])
+            print("Time to clear that tower!")
+            while not self.imgSearcher.searchForImage(self.imgImp.ttowerButton, True):
+                self.imgSearcher.searchForImage(self.imgImp.challengeButton, True)
             time.sleep(2)
-            self.bossKillingLoop()
+            if self.trialFarmingLoop():
+                return True

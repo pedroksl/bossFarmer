@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.9.2, 2019-07-15T16:32:01. -->
+<!-- Written by QtCreator 4.9.2, 2019-07-23T00:37:42. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -137,11 +137,11 @@
     </valuelist>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Run C:/Users/Pedro/Desktop/bossFarmerQt/main.py</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Run </value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">main</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">PythonEditor.RunConfiguration.C:/Users/Pedro/Desktop/bossFarmerQt/main.py</value>
     <value type="QString" key="PythonEditor.RunConfiguation.Interpreter">C:\Users\Pedro\AppData\Local\Programs\Python\Python37-32\python.exe</value>
-    <value type="QString" key="PythonEditor.RunConfiguation.Script">C:/Users/Pedro/Desktop/bossFarmerQt/main.py</value>
+    <value type="QString" key="PythonEditor.RunConfiguation.Script"></value>
     <value type="QString" key="RunConfiguration.Arguments"></value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
