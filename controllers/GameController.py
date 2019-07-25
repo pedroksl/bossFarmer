@@ -182,8 +182,9 @@ class GameController():
                 return
             if self.imgSearcher.searchForImage(self.imgImp.noticeMessage) or self.imgSearcher.searchForImage(self.imgImp.questClear):
                 self.imgSearcher.click_random([298, 518])
+            self.imgSearcher.searchForImage(self.imgImp.battleExit, True)
             if self.imgSearcher.searchForImage(self.imgImp.accessoryError) or self.imgSearcher.searchForImage(self.imgImp.accessoryLagError):
-                self.imgSearcher.click_random([298, 518])
+                self.imgSearcher. click_random([298, 518])
             if self.imgSearcher.searchForImage(self.imgImp.accesoryReady):
                 rgb = self.imgSearcher.getPixel(683, 628)
                 if rgb[2] < 100:
