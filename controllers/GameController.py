@@ -227,6 +227,7 @@ class GameController():
                 bossNotFound = True
             time.sleep(3)
             if time.perf_counter() - time1 > self.cc.configs.refreshBossScreen:
+                self.imgSearcher.searchForImage(self.imgImp.homeIcon, True)
                 return
         print("Run is off, stopping farm.")
 
