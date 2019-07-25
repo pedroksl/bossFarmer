@@ -222,6 +222,7 @@ class GameController():
                 bossNotFound = False
                 self.summonSomething()
             elif self.imgSearcher.searchForImage(self.imgImp.bossCalculating):
+                self.imgSearcher.searchForImage(self.imgImp.homeIcon, True)
                 return
             else:
                 bossNotFound = True
