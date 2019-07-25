@@ -247,39 +247,43 @@ class GameController():
         return False
 
 
+    def findHomeScreen(self):
+        if self.imgSearcher.searchForImage(self.imgImp.connectionNotice, True):
+            print("Someone logged in, let's wait for some time out.")
+            time.sleep(self.cc.configs.timeout)
+        if self.imgSearcher.searchForImage(self.imgImp.noticeMessage) or self.imgSearcher.searchForImage(self.imgImp.questClear):
+            self.imgSearcher.click_random([298, 518])
+        if self.imgSearcher.searchForImage(self.imgImp.accessoryError):
+            self.imgSearcher.click_random([298, 518])
+        if self.imgSearcher.searchForImage(self.imgImp.touchStart, True):
+            print("Failed to click on Touch to Start during restart.")
+        if self.imgSearcher.searchForImage(self.imgImp.closeEvent, True):
+            print("Failed to click on Close Event during restart.")
+        if self.imgSearcher.searchForImage(self.imgImp.gameStart):
+            print("Did we crash?")
+            if not self.restartTheGame():
+                return
+        while self.imgSearcher.searchForImage(self.imgImp.xIcon, True):
+            time.sleep(1)
+        while self.imgSearcher.searchForImage(self.imgImp.homeIcon, True):
+            time.sleep(1)
+
+        if self.imgSearcher.searchForImage(self.imgImp.loginReward):
+            self.imgSearcher.click_random([298, 518])
+
+
     # Method used to find the boss screen no matter what window of the game you are
     def findBossScreen(self):
         if self.imgSearcher.searchForImage(self.imgImp.dbossScreen):
             self.bossKillingLoop()
         else:
             print("Find Boss Screen!")
-#        if self.imgSearcher.searchForImage(self.imgImp.noxClose, True):
-#            time.sleep(1)
-#            im = self.imgSearcher.screenshot(windowName="Reminder")
-#            im.save("Test.png")
-#            self.imgSearcher.click_random([824, 400], windowName="Reminder")
-            if self.imgSearcher.searchForImage(self.imgImp.connectionNotice, True):
-                print("Someone logged in, let's wait for some time out.")
-                time.sleep(self.cc.configs.timeout)
-            if self.imgSearcher.searchForImage(self.imgImp.noticeMessage) or self.imgSearcher.searchForImage(self.imgImp.questClear):
-                self.imgSearcher.click_random([298, 518])
-            if self.imgSearcher.searchForImage(self.imgImp.accessoryError):
-                self.imgSearcher.click_random([298, 518])
-            if self.imgSearcher.searchForImage(self.imgImp.touchStart, True):
-                print("Failed to click on Touch to Start during restart.")
-            if self.imgSearcher.searchForImage(self.imgImp.closeEvent, True):
-                print("Failed to click on Close Event during restart.")
-            if self.imgSearcher.searchForImage(self.imgImp.gameStart):
-                print("Did we crash?")
-                if not self.restartTheGame():
-                    return
-            while self.imgSearcher.searchForImage(self.imgImp.xIcon, True):
-                time.sleep(1)
-            while self.imgSearcher.searchForImage(self.imgImp.homeIcon, True):
-                time.sleep(1)
-
-            if self.imgSearcher.searchForImage(self.imgImp.loginReward):
-                self.imgSearcher.click_random([298, 518])
+            self.findHomeScreen()
+#            if self.imgSearcher.searchForImage(self.imgImp.noxClose, True):
+#                time.sleep(1)
+#                im = self.imgSearcher.screenshot(windowName="Reminder")
+#                im.save("Test.png")
+#                self.imgSearcher.click_random([824, 400], windowName="Reminder")
 
             if self.imgSearcher.searchForImage(self.imgImp.battleIcon, True):
                 print("Time to search for some fights!")
@@ -321,6 +325,7 @@ class GameController():
                 return
             if self.imgSearcher.searchForImage(self.imgImp.noticeMessage) or self.imgSearcher.searchForImage(self.imgImp.questClear):
                 self.imgSearcher.click_random([298, 518])
+            self.imgSearcher.searchForImage(self.imgImp.battleExit, True)
             if self.imgSearcher.searchForImage(self.imgImp.battleReady, True):
                 if not self.imgSearcher.searchForImageLoop(self.imgImp.battleStart, True):
                     return False
@@ -336,28 +341,7 @@ class GameController():
 
     def findTrialTowerScreen(self):
         print("Find Trial Tower Screen!")
-        if self.imgSearcher.searchForImage(self.imgImp.connectionNotice, True):
-            print("Someone logged in, let's wait for some time out.")
-            time.sleep(self.cc.configs.timeout)
-        if self.imgSearcher.searchForImage(self.imgImp.noticeMessage) or self.imgSearcher.searchForImage(self.imgImp.questClear):
-            self.imgSearcher.click_random([298, 518])
-        if self.imgSearcher.searchForImage(self.imgImp.accessoryError):
-            self.imgSearcher.click_random([298, 518])
-        if self.imgSearcher.searchForImage(self.imgImp.touchStart, True):
-            print("Failed to click on Touch to Start during restart.")
-        if self.imgSearcher.searchForImage(self.imgImp.closeEvent, True):
-            print("Failed to click on Close Event during restart.")
-        if self.imgSearcher.searchForImage(self.imgImp.gameStart):
-            print("Did we crash?")
-            if not self.restartTheGame():
-                return False
-        while self.imgSearcher.searchForImage(self.imgImp.xIcon, True):
-            time.sleep(1)
-        while self.imgSearcher.searchForImage(self.imgImp.homeIcon, True):
-            time.sleep(1)
-
-        if self.imgSearcher.searchForImage(self.imgImp.loginReward):
-            self.imgSearcher.click_random([298, 518])
+        self.findHomeScreen()
 
         if self.imgSearcher.searchForImage(self.imgImp.battleIcon, True):
             print("Time to clear that tower!")
