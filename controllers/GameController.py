@@ -108,6 +108,7 @@ class GameController():
             if (self.cc.configs.controlledDamage and not uncontrolled) and time.perf_counter() - time1 > bossTimerReal:
                 print("Time's over, fight's over!")
                 self.exitBossFight()
+                return True
 
             self.fightWithSkillsAndUlt()
 
@@ -165,10 +166,7 @@ class GameController():
                     pos = pos2
         if pos[0] is not -1:
             self.imgSearcher.click_random([pos[0] + 160, pos[1] + 30])
-            if not self.imgSearcher.searchForImageLoop(self.imgImp.summonConfirm, True, time1):
-                return
-            time.sleep(1)
-            self.imgSearcher.click_random([298, 518])
+            self.imgSearcher.searchForImageLoop(self.imgImp.summonConfirm, True, time1)
 
 
     # Method that monitors the boss window, starting fights, collecting reward, etc
@@ -353,3 +351,73 @@ class GameController():
             time.sleep(2)
             if self.trialFarmingLoop():
                 return True
+
+
+    def clickRandomCard(self):
+        firstCard = [200, 350]
+        secondCard = [500, 350]
+        thirdCard = [800, 350]
+        fourthCard = [100, 350]
+        randomNumber = r(1,4)
+        print(r)
+        self.imgSearcher.click_exact(firstCard)
+        time.sleep(5)
+        return
+        if r is 1:
+            self.imgSearcher.click_exact(firstCard)
+        elif r is 2:
+            self.imgSearcher.click_exact(secondCard)
+        elif r is 3:
+            self.imgSearcher.click_exact(thirdCard)
+        elif r is 4:
+            self.imgSearcher.click_exact(fourthCard)
+
+
+    def missionFarmLoop(self):
+        while self.cc.configs.run:
+            print("Mission farming loop!")
+            time1 = time.perf_counter()
+            if self.imgSearcher.searchForImage(self.imgImp.cardSelection):
+                self.clickRandomCard()
+            self.imgSearcher.searchForImage(self.imgImp.playAgain, True)
+            while not self.imgSearcher.searchForImage(self.imgImp.cardSelection):
+                print("Fight!")
+                if self.imgSearcher.searchForImage(self.imgImp.cardSelection):
+                    self.clickRandomCard()
+                self.imgSearcher.searchForImage(self.imgImp.playAgain, True)
+                if self.imgSearcher.searchForImage(self.imgImp.gameStart):
+                    return False
+                if self.imgSearcher.searchForImage(self.imgImp.connectionNotice):
+                    return False
+                if self.imgSearcher.searchForImage(self.imgImp.noticeMessage) or self.imgSearcher.searchForImage(self.imgImp.questClear):
+                    self.imgSearcher.click_random([298, 518])
+                if self.cc.configs.run and self.imgSearcher.searchForImage(self.imgImp.pauseWindow):
+                    self.imgSearcher.click_random([298, 518])
+
+                self.fightWithSkillsAndUlt()
+
+                if time.perf_counter() - time1 > self.cc.configs.towerStuck:
+                    self.imgSearcher.click_random([298, 518])
+                    print("Oops, took too long to finish the mission, might be stuck!")
+                    return False
+        print("Run is off, stopping farm.")
+        return True
+
+
+    def findMissionScreen(self):
+        print("Find Mission Screen!")
+        self.findHomeScreen()
+
+        if self.imgSearcher.searchForImage(self.imgImp.adventureIcon, True):
+            print("Time to fight some monsters!")
+            time1 = time.perf_counter()
+            self.imgSearcher.searchForImageLoop(self.imgImp.mission17, True, time1)
+            time.sleep(1)
+            self.imgSearcher.click_exact([525, 400]) # 45 for 3, 525 for 6 and 1100 for 9
+            time.sleep(1)
+            if not self.imgSearcher.searchForImageLoop(self.imgImp.battleReady, True, time1):
+                return
+            if not self.imgSearcher.searchForImageLoop(self.imgImp.missonStart, True, time1):
+                return
+            self.missionFarmLoop()
+

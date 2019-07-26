@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'mainwindow.ui',
 # licensing of 'mainwindow.ui' applies.
 #
-# Created: Mon Jul 22 21:49:32 2019
+# Created: Thu Jul 25 13:17:54 2019
 #      by: pyside2-uic  running on PySide2 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -134,8 +134,8 @@ class Ui_MainWindow(object):
         self.fightModeBButton.setText(QtWidgets.QApplication.translate("MainWindow", "Auto Skill/Ultimate", None, -1))
         self.fightModeCButton.setText(QtWidgets.QApplication.translate("MainWindow", "Trial Tower", None, -1))
         self.fightModeDButton.setText(QtWidgets.QApplication.translate("MainWindow", "Chasm", None, -1))
-        self.fightModeEButton.setText(QtWidgets.QApplication.translate("MainWindow", "Samuel", None, -1))
-        self.fightModeFButton.setText(QtWidgets.QApplication.translate("MainWindow", "Faz as bíblia", None, -1))
+        self.fightModeEButton.setText(QtWidgets.QApplication.translate("MainWindow", "Mission", None, -1))
+        self.fightModeFButton.setText(QtWidgets.QApplication.translate("MainWindow", "I don\'t know", None, -1))
         self.groupBox_2.setTitle(QtWidgets.QApplication.translate("MainWindow", "Bot Controls", None, -1))
         self.toggleSkillsButton.setText(QtWidgets.QApplication.translate("MainWindow", "Toggle Skills", None, -1))
         self.changePartySkillButton.setText(QtWidgets.QApplication.translate("MainWindow", "Change Party Skill", None, -1))

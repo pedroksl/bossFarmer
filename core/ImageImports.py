@@ -8,6 +8,11 @@ class ImageImports():
         self.challengeButton = "Images/challengeButton.bmp"
         self.questClear = "Images/questClear.bmp"
 
+        self.cardSelection = "Images/cardSelection.bmp"
+        self.mission17 = "Images/mission17.bmp"
+        self.mission18 = "Images/mission18.bmp"
+        self.mission19 = "Images/mission19.bmp"
+
         self.ttowerButton = "Images/ttowerButton.bmp"
 
         self.dbossButton = "Images/dbossButton.bmp"
@@ -24,6 +29,7 @@ class ImageImports():
         self.rewardConfirm = "Images/rewardConfirm.bmp"
         self.rewardAcquired = "Images/rewardAcquired.bmp"
         self.battleIcon = "Images/battleIcon.bmp"
+        self.adventureIcon = "Images/adventureIcon.bmp"
         self.closeEvent = "Images/closeEvent.bmp"
         self.connectionNotice = "Images/connectionNotice.bmp"
         self.equipFull = "Images/equipFull.bmp"
@@ -48,6 +54,8 @@ class ImageImports():
         self.bossDeadError = "Images/bossDeadError.bmp"
         self.pauseWindow = "Images/pauseWindow.bmp"
         self.noticeMessage = "Images/noticeMessage.bmp"
+        self.missonStart = "Images/missonStart.bmp"
+        self.playAgain = "Images/playAgain.bmp"
 
         self.dchasmButton = "Images/Chasm/dchasmButton.bmp"
         self.chasmAgios = "Images/Chasm/chasmAgios.bmp"
