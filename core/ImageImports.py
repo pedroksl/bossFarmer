@@ -15,6 +15,7 @@ class ImageImports():
 
         self.ttowerButton = "Images/ttowerButton.bmp"
 
+        self.acquireBoss = "Images/acquireBoss.bmp"
         self.dbossButton = "Images/dbossButton.bmp"
         self.dbossScreen = "Images/dbossScreen.bmp"
         self.noxRestart = "Images/noxRestart.bmp"

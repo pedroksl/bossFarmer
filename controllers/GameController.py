@@ -157,13 +157,17 @@ class GameController():
     def summonSomething(self):
         time1 = time.perf_counter()
         pos = [-1, -1]
-        if self.imgSearcher.searchForImage(self.imgImp.wendyCard):
-            pos = self.imgSearcher.imagesearch(self.imgImp.wendyCard)
-        if self.imgSearcher.searchForImage(self.imgImp.gorgosCard):
-            pos2 = self.imgSearcher.imagesearch(self.imgImp.gorgosCard)
+        if self.imgSearcher.searchForImage(self.imgImp.wendyCard, precision=0.9):
+            pos = self.imgSearcher.imagesearch(self.imgImp.wendyCard, precision=0.9)
+        if self.imgSearcher.searchForImage(self.imgImp.gorgosCard, precision=0.9):
+            pos2 = self.imgSearcher.imagesearch(self.imgImp.gorgosCard, precision=0.9)
             if pos2[0] is not -1:
                 if pos[0] is -1 or pos[1] > pos2[1]:
                     pos = pos2
+#        if pos[0] is -1 and not self.imgSearcher.searchForImage(self.imgImp.acquireBoss):
+#            self.imgSearcher.click_scroll([1000, 500], "up", 300)
+#            time.sleep(1)
+#            self.summonSomething()
         if pos[0] is not -1:
             self.imgSearcher.click_random([pos[0] + 160, pos[1] + 30])
             self.imgSearcher.searchForImageLoop(self.imgImp.summonConfirm, True, time1)
@@ -173,6 +177,7 @@ class GameController():
     def bossKillingLoop(self):
         time1 = time.perf_counter()
         bossNotFound = False
+        #self.summonSomething()
         while self.cc.configs.run:
             print("Boss Killing Loop!")
             if self.imgSearcher.searchForImage(self.imgImp.connectionNotice) or self.imgSearcher.searchForImage(self.imgImp.gameStart):

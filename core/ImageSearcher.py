@@ -139,9 +139,9 @@ class ImageSearcher:
         else:
             lParam = win32api.MAKELONG(pos[0] + self.hMargin, pos[1] + self.vMargin)
 
-        win32gui.PostMessage(hWnd, win32con.WM_LBUTTONDOWN,
+        win32gui.SendMessage(hWnd, win32con.WM_LBUTTONDOWN,
                              win32con.MK_LBUTTON, lParam)
-        win32gui.PostMessage(hWnd, win32con.WM_LBUTTONUP,
+        win32gui.SendMessage(hWnd, win32con.WM_LBUTTONUP,
                              0, lParam)
         time.sleep(timestamp)
 
@@ -167,6 +167,22 @@ class ImageSearcher:
             self.click_image(imageDir, pos)
         return pos[0] != -1
 
+    def click_scroll(self, pos, dir="up", distance=100, windowName=""):
+        if windowName is "":
+            windowName = self.windowName
+        hWnd = win32gui.FindWindow(None, windowName)
+        lParam1 = win32api.MAKELONG(pos[0] + self.hMargin, pos[1] + self.vMargin)
+        if dir is "up":
+            lParam2 = win32api.MAKELONG(pos[0] + self.hMargin, pos[1] - distance + self.vMargin)
+        elif dir is "down":
+            lParam2 = win32api.MAKELONG(pos[0] + self.hMargin, pos[1] + distance + self.vMargin)
+        elif dir is "left":
+            lParam2 = win32api.MAKELONG(pos[0] - distance + self.hMargin, pos[1] + self.vMargin)
+        elif dir is "right":
+            lParam2 = win32api.MAKELONG(pos[0] + distance + self.hMargin, pos[1] + self.vMargin)
+
+        win32gui.SendMessage(hWnd, win32con.WM_MOUSEWHEEL, -5000, lParam1)
+        time.sleep(0.5)
 
     def searchForImageInArea(self, imageDir, x1, y1, x2, y2,
                              clickPos=False, precision=0.8):
