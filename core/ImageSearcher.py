@@ -27,15 +27,11 @@ class ImageSearcher:
         w = right - left
         h = bot - top
 
-        im = self.screenshot()
-        im.save("teste.png")
-
         if self.windowName is "LDPlayer":
             self.hMargin = 1
         else:
             self.hMargin = int((w - self.hRes) / 2)
         self.vMargin = int((h - self.vRes - 2 * self.hMargin) + self.hMargin)
-        print(self.hMargin, self.vMargin)
 
     def getPixel(self, x, y, ignoreMargins=False, image=None):
         if image is None:
@@ -161,6 +157,16 @@ class ImageSearcher:
                              0, lParam)
         time.sleep(timestamp)
 
+
+    def click_image_middle(self, image, pos, timestamp=0.5, action="left", offset=5):
+        img = cv2.imread(image)
+        width = pos[0]
+        height = pos[1]
+        if img.shape:
+            height, width, channels = img.shape
+        newPos = [int(pos[0] + width / 2 - self.hMargin),
+                  int(pos[1] + height / 2 - self.vMargin)]
+        self.click_random(newPos, timestamp, action, offset)
 
     def click_image(self, image, pos, timestamp=0.5, action="left", offset=5):
         img = cv2.imread(image)

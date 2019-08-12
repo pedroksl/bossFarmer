@@ -35,6 +35,8 @@ class ImageImports():
         self.connectionNotice = "Images/connectionNotice.bmp"
         self.equipFull = "Images/equipFull.bmp"
         self.gameStart = "Images/gameStart.bmp"
+        self.gameStartNox = "Images/gameStart.bmp"
+        self.gameStartLd = "Images/gameStartLd.bmp"
         self.homeIcon = "Images/homeIcon.bmp"
         self.touchStart = "Images/touchStart.bmp"
         self.xIcon = "Images/xIcon.bmp"

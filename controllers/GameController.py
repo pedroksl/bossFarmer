@@ -8,6 +8,11 @@ class GameController():
         self.cc = ConCon
         self.imgSearcher = ImageSearcher(self.cc)
         self.imgImp = ImageImports()
+        if self.cc.configs.windowName is "NoxPlayer":
+            self.imgImp.gameStart = self.imgImp.gameStartNox
+        if self.cc.configs.windowName is "LDPlayer":
+            self.imgImp.gameStart = self.imgImp.gameStartLd
+        print(self.imgImp.gameStart)
 
     def setWindowMargins(self):
         self.imgSearcher.setWindowMargins()
@@ -239,8 +244,10 @@ class GameController():
     def restartTheGame(self):
         print("Restart the Game!")
         time1 = time.perf_counter()
-        if self.imgSearcher.searchForImage(self.imgImp.gameStart):
-            self.imgSearcher.click_random([1050, 225])
+        pos = self.imgSearcher.imagesearch(self.imgImp.gameStart)
+        if pos[0] is not -1:
+            # self.imgSearcher.click_random([1050, 225])
+            self.imgSearcher.click_image_middle(self.imgImp.gameStart, pos)
             if not self.imgSearcher.searchForImageLoop(self.imgImp.touchStart, True, time1):
                 print("Couldn't find the touch to start button. :(")
                 return False
