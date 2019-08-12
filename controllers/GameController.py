@@ -148,7 +148,6 @@ class GameController():
                 self.imgSearcher.click_random([298, 518])
                 return False
 
-        time1 = time.perf_counter()
         result = self.fightBoss(uncontrolled)
         return result
 
@@ -297,7 +296,7 @@ class GameController():
                     self.imgSearcher.searchForImage(self.imgImp.dailyButton, True)
                 self.bossKillingLoop()
             else:
-                self.imgSearcher.click_random([198, 518])
+                self.imgSearcher.click_random([298, 518])
 
 
     def fightTowerLevel(self):
@@ -364,19 +363,16 @@ class GameController():
         thirdCard = [800, 350]
         fourthCard = [100, 350]
         randomNumber = r(1,4)
-        print(r)
-        self.imgSearcher.click_exact(firstCard)
+        if randomNumber is 1:
+            self.imgSearcher.click_exact(firstCard)
+        elif randomNumber is 2:
+            self.imgSearcher.click_exact(secondCard)
+        elif randomNumber is 3:
+            self.imgSearcher.click_exact(thirdCard)
+        elif randomNumber is 4:
+            self.imgSearcher.click_exact(fourthCard)
         time.sleep(5)
         return
-        if r is 1:
-            self.imgSearcher.click_exact(firstCard)
-        elif r is 2:
-            self.imgSearcher.click_exact(secondCard)
-        elif r is 3:
-            self.imgSearcher.click_exact(thirdCard)
-        elif r is 4:
-            self.imgSearcher.click_exact(fourthCard)
-
 
     def missionFarmLoop(self):
         while self.cc.configs.run:
@@ -418,7 +414,7 @@ class GameController():
             time1 = time.perf_counter()
             self.imgSearcher.searchForImageLoop(self.imgImp.mission17, True, time1)
             time.sleep(1)
-            self.imgSearcher.click_exact([525, 400]) # 45 for 3, 525 for 6 and 1100 for 9
+            self.imgSearcher.click_exact([45, 400]) # 45 for 3, 525 for 6 and 1100 for 9
             time.sleep(1)
             if not self.imgSearcher.searchForImageLoop(self.imgImp.battleReady, True, time1):
                 return
@@ -426,3 +422,6 @@ class GameController():
                 return
             self.missionFarmLoop()
 
+    def testMode(self):
+        self.imgSearcher.click_exact([1025, 41])
+        self.imgSearcher.enumChilds()

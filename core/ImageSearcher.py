@@ -14,6 +14,7 @@ class ImageSearcher:
         self.cc = ConCon
         self.windowName = self.cc.configs.windowName
         self.menuUnstuck = self.cc.configs.menuUnstuck
+        self.hWnd = win32gui.FindWindow(None, self.windowName)
 
         self.hRes = 1280
         self.vRes = 720
@@ -21,13 +22,20 @@ class ImageSearcher:
         self.vMargin = 32
 
     def setWindowMargins(self):
-        hwnd = win32gui.FindWindow(None, self.windowName)
-        left, top, right, bot = win32gui.GetWindowRect(hwnd)
+        self.hWnd = win32gui.FindWindow(None, self.windowName)
+        left, top, right, bot = win32gui.GetWindowRect(self.hWnd)
         w = right - left
         h = bot - top
 
-        self.hMargin = int((w - self.hRes) / 2)
+        im = self.screenshot()
+        im.save("teste.png")
+
+        if self.windowName is "LDPlayer":
+            self.hMargin = 1
+        else:
+            self.hMargin = int((w - self.hRes) / 2)
         self.vMargin = int((h - self.vRes - 2 * self.hMargin) + self.hMargin)
+        print(self.hMargin, self.vMargin)
 
     def getPixel(self, x, y, ignoreMargins=False, image=None):
         if image is None:
@@ -43,16 +51,16 @@ class ImageSearcher:
     def screenshot(self, rleft=-1, rtop=-1, rright=-1, rbot=-1, windowName=""):
         if windowName is "":
             windowName = self.windowName
-        hwnd = win32gui.FindWindow(None, windowName)
+        self.hWnd = win32gui.FindWindow(None, windowName)
 
-        left, top, right, bot = win32gui.GetWindowRect(hwnd)
+        left, top, right, bot = win32gui.GetWindowRect(self.hWnd)
         w = right - left
         h = bot - top
 
         if left < 0 and bot < 0 and right < 0 and top < 0:
             return None
 
-        hwndDC = win32gui.GetWindowDC(hwnd)
+        hwndDC = win32gui.GetWindowDC(self.hWnd)
         mfcDC = win32ui.CreateDCFromHandle(hwndDC)
         saveDC = mfcDC.CreateCompatibleDC()
 
@@ -61,7 +69,7 @@ class ImageSearcher:
 
         saveDC.SelectObject(saveBitMap)
 
-        result = windll.user32.PrintWindow(hwnd, saveDC.GetSafeHdc(), 0)
+        result = windll.user32.PrintWindow(self.hWnd, saveDC.GetSafeHdc(), 0)
 
         bmpinfo = saveBitMap.GetInfo()
         bmpstr = saveBitMap.GetBitmapBits(True)
@@ -74,7 +82,7 @@ class ImageSearcher:
         win32gui.DeleteObject(saveBitMap.GetHandle())
         saveDC.DeleteDC()
         mfcDC.DeleteDC()
-        win32gui.ReleaseDC(hwnd, hwndDC)
+        win32gui.ReleaseDC(self.hWnd, hwndDC)
 
         if rleft is not -1:
             return im.crop((rleft + self.hMargin, rtop + self.vMargin, rright + self.hMargin, rbot + self.vMargin))
@@ -132,16 +140,24 @@ class ImageSearcher:
     def click_random(self, pos, timestamp=0.5, action="left", offset=5, windowName=""):
         if windowName is "":
             windowName = self.windowName
-        hWnd = win32gui.FindWindow(None, windowName)
-        if offset > 0:
-            lParam = win32api.MAKELONG(pos[0] + self.hMargin + r(-offset, offset),
-                                       pos[1] + self.vMargin + r(-offset, offset))
-        else:
-            lParam = win32api.MAKELONG(pos[0] + self.hMargin, pos[1] + self.vMargin)
 
-        win32gui.SendMessage(hWnd, win32con.WM_LBUTTONDOWN,
+        hWnd = win32gui.FindWindow(None, windowName)
+        if windowName is "LDPlayer":
+            win32gui.EnumChildWindows(hWnd, self.findCorrectChild, "TheRender")
+            clickX = pos[0]
+            clickY = pos[1]
+        else:
+            self.hWnd = hWnd
+            clickX = pos[0] + self.hMargin
+            clickY = pos[1] + self.vMargin
+        if offset > 0:
+            lParam = win32api.MAKELONG(clickX + r(-offset, offset), clickY + r(-offset, offset))
+        else:
+            lParam = win32api.MAKELONG(clickX, clickY)
+
+        win32gui.SendMessage(self.hWnd, win32con.WM_LBUTTONDOWN,
                              win32con.MK_LBUTTON, lParam)
-        win32gui.SendMessage(hWnd, win32con.WM_LBUTTONUP,
+        win32gui.SendMessage(self.hWnd, win32con.WM_LBUTTONUP,
                              0, lParam)
         time.sleep(timestamp)
 
@@ -170,7 +186,7 @@ class ImageSearcher:
     def click_scroll(self, pos, dir="up", distance=100, windowName=""):
         if windowName is "":
             windowName = self.windowName
-        hWnd = win32gui.FindWindow(None, windowName)
+        self.hWnd = win32gui.FindWindow(None, windowName)
         lParam1 = win32api.MAKELONG(pos[0] + self.hMargin, pos[1] + self.vMargin)
         if dir is "up":
             lParam2 = win32api.MAKELONG(pos[0] + self.hMargin, pos[1] - distance + self.vMargin)
@@ -181,7 +197,7 @@ class ImageSearcher:
         elif dir is "right":
             lParam2 = win32api.MAKELONG(pos[0] + distance + self.hMargin, pos[1] + self.vMargin)
 
-        win32gui.SendMessage(hWnd, win32con.WM_MOUSEWHEEL, -5000, lParam1)
+        win32gui.SendMessage(self.hWnd, win32con.WM_MOUSEWHEEL, -5000, lParam1)
         time.sleep(0.5)
 
     def searchForImageInArea(self, imageDir, x1, y1, x2, y2,
@@ -198,3 +214,8 @@ class ImageSearcher:
         if clickPos and pos[0] != -1:
             self.click_image(imageDir, pos)
         return pos[0] != -1
+
+    def findCorrectChild(self, hWnd, lParam):
+        text = win32gui.GetWindowText(hWnd)
+        if text == lParam:
+            self.hWnd = hWnd

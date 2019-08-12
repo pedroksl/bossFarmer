@@ -13,8 +13,9 @@ class ConfigurationObj():
     refreshBossScreen = 60  # Time without bosses to refresh the page
     menuUnstuck = 30  # Time to wait in the menu before trying to unstuck
     bossTimer = 70  # Time to wait before leaving a boss battle in controlled mode
+    windowName = "LDPlayer" # Use NoxPlayer for Nox, and LDPlayer for LD
     pixelOffset = False # Parameter used to offset pixel rgb comparison by some pixels
-    fightMode = 0
+    fightMode = 0 # Default starting mode, set 0 for boss farming
 
     def default(self):
         self.enableSkills = True
@@ -31,6 +32,6 @@ class ConfigurationObj():
         self.refreshBossScreen = 60
         self.menuUnstuck = 30
         self.bossTimer = 70
-        self.windowName = "NoxPlayer"
+        self.windowName = "LDPlayer"
         self.pixelOffset = False
         self.fightMode = 0

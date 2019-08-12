@@ -25,3 +25,6 @@ class Run(threading.Thread):
             elif self.cc.configs.fightMode == 4:
                 self.gc.findMissionScreen()
                 time.sleep(2)
+            elif self.cc.configs.fightMode == 5:
+                self.gc.testMode()
+                time.sleep(1)
