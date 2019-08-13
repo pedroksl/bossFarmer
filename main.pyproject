@@ -11,6 +11,7 @@
         "controllers/ConfigurationController.py",
         "controllers/ConfigurationObj.py",
         "controllers/GameController.py",
+        "controllers/RunStats.py",
         "core/__init__.py",
         "core/ImageImports.py",
         "core/ImageSearcher.py",

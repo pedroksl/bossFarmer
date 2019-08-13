@@ -1,13 +1,15 @@
 from core import ImageImports
 from core import ImageSearcher
+from controllers.RunStats import RunStats
 import time
 from numpy.random import randint as r
 
 class GameController():
-    def __init__(self, ConCon):
+    def __init__(self, ConCon, updateTable):
         self.cc = ConCon
         self.imgSearcher = ImageSearcher(self.cc)
         self.imgImp = ImageImports()
+        self.stats = RunStats(updateTable)
         if self.cc.configs.windowName is "NoxPlayer":
             self.imgImp.gameStart = self.imgImp.gameStartNox
         if self.cc.configs.windowName is "LDPlayer":
@@ -120,6 +122,7 @@ class GameController():
                 self.imgSearcher.click_random([298, 518])
                 print("Oops, took too long to finish the boss, might be stuck!")
                 return False
+        self.stats.bossKilled()
         return True
 
 
