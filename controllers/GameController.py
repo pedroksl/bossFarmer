@@ -393,7 +393,7 @@ class GameController():
                 self.clickRandomCard()
             if self.imgSearcher.searchForImage(self.imgImp.playAgain):
                 rgb = self.imgSearcher.getPixel(970, 640)
-                if rgb[2] < 150:
+                if rgb[2] < 130:
                     print("Energy is over.")
                     return False
                 self.imgSearcher.searchForImage(self.imgImp.playAgain, True)
