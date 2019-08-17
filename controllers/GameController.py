@@ -208,6 +208,7 @@ class GameController():
                 print("Getting reward!")
                 if not self.imgSearcher.searchForImageLoop(self.imgImp.rewardAcquired, True, time1):
                     return
+                time.sleep(1)
                 if not self.imgSearcher.searchForImageLoop(self.imgImp.rewardConfirm, True, time1):
                     return
             if self.imgSearcher.searchForImage(self.imgImp.ownBoss):
@@ -437,6 +438,45 @@ class GameController():
                 return
             self.missionFarmLoop()
 
+
+    def currentMissionFarmLoop(self):
+        time1 = time.perf_counter()
+        while self.cc.configs.run:
+            print("Mission farming loop!")
+            self.imgSearcher.searchForImageLoop(self.imgImp.battleReady, True, time1)
+            self.imgSearcher.searchForImageLoop(self.imgImp.missonStart, True, time1)
+            if self.imgSearcher.searchForImage(self.imgImp.cardSelection):
+                self.clickRandomCard()
+            if self.imgSearcher.searchForImage(self.imgImp.playAgain):
+                rgb = self.imgSearcher.getPixel(970, 640)
+                if rgb[2] < 130:
+                    print("Energy is over.")
+                    return False
+                self.imgSearcher.searchForImage(self.imgImp.playAgain, True)
+                time1 = time.perf_counter()
+                time.sleep(1)
+            if self.imgSearcher.searchForImage(self.imgImp.cardSelection):
+                self.clickRandomCard()
+            if self.imgSearcher.searchForImage(self.imgImp.gameStart):
+                return False
+            if self.imgSearcher.searchForImage(self.imgImp.connectionNotice):
+                return False
+            if self.imgSearcher.searchForImage(self.imgImp.noticeMessage) or self.imgSearcher.searchForImage(self.imgImp.questClear):
+                self.imgSearcher.click_random([298, 518])
+            if self.cc.configs.run and self.imgSearcher.searchForImage(self.imgImp.pauseWindow):
+                self.imgSearcher.click_random([298, 518])
+
+            self.fightWithSkillsAndUlt()
+
+            if time.perf_counter() - time1 > self.cc.configs.towerStuck:
+                self.imgSearcher.click_random([298, 518])
+                print("Oops, took too long to finish the mission, might be stuck!")
+                return False
+        print("Run is off, stopping farm.")
+        return True
+
+
     def testMode(self):
-        self.imgSearcher.click_exact([1025, 41])
-        self.imgSearcher.enumChilds()
+        #self.imgSearcher.click_exact([1025, 41])
+        #self.imgSearcher.enumChilds()
+        self.currentMissionFarmLoop()
