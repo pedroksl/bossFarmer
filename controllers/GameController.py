@@ -443,8 +443,8 @@ class GameController():
         time1 = time.perf_counter()
         while self.cc.configs.run:
             print("Mission farming loop!")
-            self.imgSearcher.searchForImageLoop(self.imgImp.battleReady, True, time1)
-            self.imgSearcher.searchForImageLoop(self.imgImp.missonStart, True, time1)
+            self.imgSearcher.searchForImage(self.imgImp.battleReady, True)
+            self.imgSearcher.searchForImage(self.imgImp.missonStart, True)
             if self.imgSearcher.searchForImage(self.imgImp.cardSelection):
                 self.clickRandomCard()
             if self.imgSearcher.searchForImage(self.imgImp.playAgain):
@@ -467,11 +467,6 @@ class GameController():
                 self.imgSearcher.click_random([298, 518])
 
             self.fightWithSkillsAndUlt()
-
-            if time.perf_counter() - time1 > self.cc.configs.towerStuck:
-                self.imgSearcher.click_random([298, 518])
-                print("Oops, took too long to finish the mission, might be stuck!")
-                return False
         print("Run is off, stopping farm.")
         return True
 
