@@ -447,13 +447,7 @@ class GameController():
             self.imgSearcher.searchForImage(self.imgImp.missonStart, True)
             if self.imgSearcher.searchForImage(self.imgImp.cardSelection):
                 self.clickRandomCard()
-            if self.imgSearcher.searchForImage(self.imgImp.playAgain):
-                rgb = self.imgSearcher.getPixel(970, 640)
-                if rgb[2] < 130:
-                    print("Energy is over.")
-                    return False
-                self.imgSearcher.searchForImage(self.imgImp.playAgain, True)
-                time1 = time.perf_counter()
+            if self.imgSearcher.searchForImage(self.imgImp.playAgain, True):
                 time.sleep(1)
             if self.imgSearcher.searchForImage(self.imgImp.cardSelection):
                 self.clickRandomCard()
